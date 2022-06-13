@@ -1,3 +1,6 @@
+# Emacs
+*~
+# Meson
 .cache
 .vscode
 subprojects/googletest-release-1.11.0
