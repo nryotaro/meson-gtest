@@ -68,6 +68,26 @@ public:
     resize();
   }
 
+  void remove(T item) {
+    std::unique_ptr<T[]> next_ptr = std::make_unique<T[]>(capacity());
+    size_t idx = 0;
+    for (size_t i = 0; i < size(); i++) {
+      if (ptr[i] != item) {
+        next_ptr[idx++] = ptr[i];
+      }
+    }
+    siz = idx;
+    resize();
+  }
+
+  size_t find(T item) {
+    for (size_t i = 0; i < size(); i++) {
+      if (ptr[i] == item)
+        return i;
+    }
+    return -1;
+  }
+
 private:
   std::unique_ptr<T[]> ptr;
   size_t cap;

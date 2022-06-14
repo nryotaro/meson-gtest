@@ -49,3 +49,15 @@ TEST(delete, 1) {
   EXPECT_EQ(3, sut[1]);
   EXPECT_EQ(56, sut[2]);
 }
+
+TEST(remove, 1) {
+  MyArray<int> sut = {2, 3, 4, 56};
+  sut.remove(3);
+  EXPECT_EQ(3, sut.size());
+}
+
+TEST(find, 1) {
+  MyArray<int> sut = {2, 3, 4, 56};
+
+  EXPECT_EQ(2, sut.find(4));
+}
