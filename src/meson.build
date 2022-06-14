@@ -1,2 +1,2 @@
 
-myarray = library('myarray', 'myarray.cc')
+# myarray = library('myarray', 'myarray.cc')
