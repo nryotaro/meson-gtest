@@ -2,8 +2,12 @@
 #include <gtest/gtest.h>
 using namespace myarray;
 
-TEST(ArrayAccess, 1) {
+TEST(acess, 1) {
   MyArray<int> sut = {23, 2};
+  EXPECT_EQ(2, sut[1]);
+}
 
-  EXPECT_EQ(sut[1], 2);
+TEST(size, 2) {
+  MyArray<int> sut = {23, 2};
+  EXPECT_EQ(2, sut.size());
 }
