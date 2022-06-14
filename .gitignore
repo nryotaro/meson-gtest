@@ -5,3 +5,4 @@
 .vscode
 subprojects/googletest-release-1.11.0
 subprojects/packagecache
+compile_commands.json
