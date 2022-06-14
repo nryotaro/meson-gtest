@@ -40,3 +40,12 @@ TEST(prepent, 1) {
   sut.prepend(5);
   EXPECT_EQ(5, sut[0]);
 }
+
+TEST(delete, 1) {
+  MyArray<int> sut = {2, 3, 4, 56};
+  sut.del(2);
+  EXPECT_EQ(3, sut.size());
+  EXPECT_EQ(2, sut[0]);
+  EXPECT_EQ(3, sut[1]);
+  EXPECT_EQ(56, sut[2]);
+}

@@ -34,7 +34,8 @@ public:
   }
 
   void insert(size_t index, T item) {
-    std::unique_ptr<T[]> next_ptr = std::make_unique<T[]>(size() + 1);
+    resize();
+    std::unique_ptr<T[]> next_ptr = std::make_unique<T[]>(capacity());
     for (size_t i = 0; i < index; i++) {
       next_ptr[i] = ptr[i];
     }
@@ -47,6 +48,25 @@ public:
   }
 
   void prepend(T item) { insert(0, item); }
+
+  T pop() {
+    T item = ptr[size() - 1];
+    siz--;
+    resize();
+    return item;
+  }
+
+  void del(size_t index) {
+    std::unique_ptr<T[]> next_ptr = std::make_unique<T[]>(capacity());
+    for (size_t i = 0, idx = 0; i < size(); i++) {
+      if (i != index) {
+        next_ptr[idx++] = ptr[i];
+      }
+    }
+    ptr = move(next_ptr);
+    siz--;
+    resize();
+  }
 
 private:
   std::unique_ptr<T[]> ptr;
