@@ -25,3 +25,18 @@ TEST(capacity, 2) {
 
   EXPECT_EQ(32, sut.capacity());
 }
+
+TEST(insert, 1) {
+  MyArray<int> sut = {0};
+  sut.insert(0, 1);
+
+  EXPECT_EQ(2, sut.size());
+  EXPECT_EQ(1, sut[0]);
+  EXPECT_EQ(0, sut[1]);
+}
+
+TEST(prepent, 1) {
+  MyArray<int> sut = {0, 1, 3, 43};
+  sut.prepend(5);
+  EXPECT_EQ(5, sut[0]);
+}
