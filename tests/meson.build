@@ -3,7 +3,7 @@ gtest_dep = gtest_proj.get_variable('gtest_dep')
 gtest_main_dep = gtest_proj.get_variable('gtest_main_dep')
 
 
-header_tests = ['myarray']
+header_tests = ['myarray', 'mylist']
 
 foreach header_test: header_tests
   e = executable(
