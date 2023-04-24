@@ -1,99 +1,79 @@
-// #ifndef TABLE_HEADER_H_
-// #define TABLE_HEADER_H_
-
-// #endif // TABLE_HEADER_H_
+#ifndef TABLE_HEADER_H_
+#define TABLE_HEADER_H_
+#include <iostream>
 #include <optional>
 #include <vector>
 template <typename T> class HashTable {
 public:
-  HashTable(int size);
-  bool add(int key, int value);
-  //  bool exist(int key);
-  //  std::optional<T> get(int key);
-  //  void remove(int key);
-
-private:
-  std::vector<std::optional<std::pair<int, int>>> table;
-  int hash(int key);
-};
-
-/*
-  #include <filesystem>
-#include <hash_table.h>
-#include <optional>
-#include <vector>
-
-/**
-   hash(k, m) - m is size of hash table
-   add(key, value) - if key already exists, update value
-   exists(key)
-   get(key)
-   remove(key)
- */
-HashTable::HashTable(int size) {
-  table.resize(size);
-  for (int i = 0; i < size; i++)
-    table[i] = std::nullopt;
-}
-// template <typename T> HashTable<T>::HashTable(int size) {
-//   table.resize(size);
-//   for (int i = 0; i < size; i++)
-//     table[i] = std::nullopt;
-// }
-// template <typename T> bool HashTable<T>::add(int key, T value) {
-//   for (int k, i = 0; i < table.size(); i++) {
-//     k = hash(key + i);
-//     if (table[k] == std::nullopt) {
-//       table[k] = {key, value};
-//       return true;
-//     }
-//   }
-//   return false;
-// }
-// template <typename T> int HashTable<T>::hash(int key) {
-//   return key % table.size();
-// }
-
-/*
-
+  HashTable(int size) {
+    values.resize(size);
+    keys.resize(size);
+    for (int i = 0; i < size; i++)
+      values[i] = keys[i] = std::nullopt;
+  }
   bool add(int key, T value) {
-
-    for (int h_key = hash(key), i = 0; i < table.size(); i++) {
-      int k = (h_key + i) % table.size();
-      if (table[k] == std::nullopt) {
-        table[k] = {key, value};
+    for (int k = key, i = 0; i < get_size(); i++) {
+      k = hash(key + i);
+      if (values[k] == std::nullopt) {
+        keys[k] = key;
+        values[k] = value;
         return true;
-      }
+      } else if (keys[k] == key)
+        return true;
     }
     return false;
   }
-
-  bool exist(int key) {
-    std::optional<T> v = get(key);
-    return v != std::nullopt;
-  }
   std::optional<T> get(int key) {
-    for (int h_key = hash(key), i = 0; i < table.size(); i++) {
-      int k = (h_key + i) % table.size();
-      if (table[k] == std::nullopt)
+    for (int k = key, i = 0; i < get_size(); i++) {
+      k = hash(key + i);
+
+      if (keys[k] == std::nullopt || hash(key) != hash(keys[k].value()))
         return std::nullopt;
-      else if (table[k].first == key)
-        return table[k].second;
+      if (keys[k].value() == key)
+        return values[k];
     }
     return std::nullopt;
   }
+  bool exist(int key) { return get(key) != std::nullopt; }
+  void debug() {
+    for (int i = 0; i < get_size(); i++) {
+      std::cout << i << " -> ";
+      if (keys[i] == std::nullopt) {
+        std::cout << "null, null\n";
+      } else {
+        std::cout << keys[i].value() << " " << values[i].value() << "\n";
+      }
+    }
+  }
   void remove(int key) {
-    int pos = -1;
-    for (int h_key = hash(key), i = 0; i < table.size(); i++) {
-      int k = (h_key + i) % table.size();
-      if (table[k] == std::nullopt)
-        return;
+    if (!exist(key))
+      return;
+
+    int current, last;
+    for (int k = key, i = 0; i < get_size(); i++) {
+      k = hash(key + i);
+      if (keys[k] == std::nullopt || hash(key) != hash(keys[k].value())) {
+        last = k - 1;
+        if (last < 0)
+          last += get_size();
+        break;
+      } else if (keys[k].value() == key) {
+        current = k;
+      }
+    }
+    if (current == last) {
+      values[current] = keys[current] = std::nullopt;
+    } else {
+      values[current] = values[last];
+      keys[current] = keys[last];
+      keys[last] = values[last] = std::nullopt;
     }
   }
 
 private:
-  std::vector<std::optional<std::pair<int, T>>> table;
-
-  int hash(int key) { return key % table.size(); }
+  std::vector<std::optional<T>> values;
+  std::vector<std::optional<int>> keys;
+  int hash(int key) { return key % values.size(); }
+  int get_size() { return static_cast<int>(values.size()); }
 };
-*/
+#endif // TABLE_HEADER_H_

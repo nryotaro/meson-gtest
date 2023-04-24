@@ -3,23 +3,24 @@ gtest_dep = gtest_proj.get_variable('gtest_dep')
 gtest_main_dep = gtest_proj.get_variable('gtest_main_dep')
 
 
-header_tests = ['myarray', 'mylist', 'myqueue']
+header_tests = ['myarray', 'mylist', 'myqueue','hash_table']
 
 foreach header_test: header_tests
   e = executable(
     'test_' + header_test, 
     header_test + '.cc', 
-    include_directories: include,
+    include_directories: inc,
     dependencies: [gtest_dep, gtest_main_dep]
   )
   test(header_test, e)
 endforeach
 
-e = executable('test_hash_table', 'hash_table.cc',
-               include_directories: inc,
-               dependencies: [gtest_dep, gtest_main_dep],
-              )
-test('test hash table', e)
+# e = executable('test_hash_table', 'hash_table.cc',
+#                include_directories: inc,
+#                dependencies: [gtest_dep, gtest_main_dep],
+#               )
+# test('test hash table', e)
+
 # test_pairs = [['myarray', myarray]]
 
 # foreach test_pair: test_pairs
