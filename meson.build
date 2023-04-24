@@ -5,7 +5,6 @@ project('ciu', 'cpp',
 add_global_arguments('-D=_debug -std=c++17 -Wall -ftrapv', language : 'cpp')
 
 include = include_directories('src/include')
+inc = include_directories('include')
 subdir('src')
 subdir('tests')
-
-

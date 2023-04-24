@@ -15,7 +15,11 @@ foreach header_test: header_tests
   test(header_test, e)
 endforeach
 
-
+e = executable('test_hash_table', 'hash_table.cc',
+               include_directories: inc,
+               dependencies: [gtest_dep, gtest_main_dep],
+              )
+test('test hash table', e)
 # test_pairs = [['myarray', myarray]]
 
 # foreach test_pair: test_pairs
@@ -28,3 +32,9 @@ endforeach
 #   )
 #   test(test_pair[0], e)
 # endforeach
+
+
+    # [footest_sources, test_main], 
+    # include_directories : inc,
+    # dependencies : [footest_deps,test_deps], 
+    # link_with : [footest_lib_deps, test_dep_libs])
